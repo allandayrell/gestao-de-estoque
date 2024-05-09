@@ -8,21 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readCSV = void 0;
-const fs_1 = __importDefault(require("fs"));
-const csv_parser_1 = __importDefault(require("csv-parser"));
-const readCSV = (filePath) => __awaiter(void 0, void 0, void 0, function* () {
-    return new Promise((resolve, reject) => {
-        const results = [];
-        fs_1.default.createReadStream(filePath)
-            .pipe((0, csv_parser_1.default)())
-            .on('data', (data) => results.push(data))
-            .on('end', () => resolve(results))
-            .on('error', (error) => reject(error));
-    });
-});
-exports.readCSV = readCSV;
+exports.estoqueService = void 0;
+const writeCSV_1 = require("../model/writeCSV");
+const filePath = './model/estoque.csv';
+class estoqueService {
+    criar(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof data.name !== 'string' || isNaN(data.weight) || isNaN(data.value) || isNaN(data.amount)) {
+                throw new Error('Dados Inválidos para o Produto');
+            }
+            else {
+                yield (0, writeCSV_1.writeCSV)(filePath, [data]);
+            }
+        });
+    }
+}
+exports.estoqueService = estoqueService;
