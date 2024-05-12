@@ -14,15 +14,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readCSV = void 0;
 const fs_1 = __importDefault(require("fs"));
-const csv_parser_1 = __importDefault(require("csv-parser"));
+const readline_1 = __importDefault(require("readline"));
+/*
+export const readCSV = async (filePath: string): Promise<Data[]> => {
+    return new Promise((resolve, reject) => {
+        const results: Data[] = [];
+        fs.createReadStream(filePath)
+        .pipe(csv())
+        .on('data', (data: Data) => results.push(data))
+        .on('end', () => resolve(results))
+        .on('error', (error) => reject(error));
+    });
+};*/
 const readCSV = (filePath) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
-        const results = [];
-        fs_1.default.createReadStream(filePath)
-            .pipe((0, csv_parser_1.default)())
-            .on('data', (data) => results.push(data))
-            .on('end', () => resolve(results))
-            .on('error', (error) => reject(error));
+        const data = [];
+        const line = readline_1.default.createInterface({
+            input: fs_1.default.createReadStream(filePath),
+        });
+        let firstLine = true;
+        line.on("line", (lineData) => {
+            let csv = lineData.split(",");
+            if (firstLine) {
+                firstLine = false;
+                return;
+            }
+            const rowData = {
+                name: csv[0],
+                weight: parseFloat(csv[1]),
+                value: parseFloat(csv[2]),
+                amount: parseInt(csv[3]),
+                status: parseInt(csv[4]),
+            };
+            data.push(rowData);
+        });
+        line.on("close", () => {
+            resolve(data);
+        });
+        line.on("error", (error) => {
+            reject(error);
+        });
     });
 });
 exports.readCSV = readCSV;
