@@ -15,4 +15,9 @@ export class estoqueService{
     
     }
 
+    async verificaItem(nomeItem: string, filePath: string): Promise<boolean> {
+        const inventario = await readCSV(filePath);
+        return inventario.some((item) => item.name === nomeItem);
+    }
+
 }

@@ -3,4 +3,5 @@ export interface Data{
     weight: number;
     value: number;
     amount: number;
+    status: number;
 }

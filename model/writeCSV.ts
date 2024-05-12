@@ -11,6 +11,7 @@ export const writeCSV = async (filePath: string, data: Data[]): Promise<void> =>
               { id: 'weight', title: 'PESO' },
               { id: 'value', title: 'VALOR' },
               { id: 'amount', title: 'QUANTIDADE' },
+              { id: 'status', title: 'STATUS'},
             ],
             append: true,
         });
