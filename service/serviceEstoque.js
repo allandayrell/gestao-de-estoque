@@ -24,23 +24,6 @@ class estoqueService {
             }
         });
     }
-    /*
-        async remover(nomeProduto: string): Promise<void>{
-            try {
-                const inventarioAtual: Data[] = await readCSV(filePath);
-                const indexToRemove = inventarioAtual.findIndex(item => item.name === nomeProduto);
-        
-                if (indexToRemove !== -1) {
-                    inventarioAtual.splice(indexToRemove, 1);
-                    await writeCSV(filePath, inventarioAtual);
-                    console.log(`Item "${nomeProduto}" removido do inventário com sucesso.`);
-                } else {
-                    console.log(`O item "${nomeProduto}" não foi encontrado no inventário.`);
-                }
-            } catch (error) {
-                console.error('Erro ao remover produto:', error);
-            }
-        }*/
     verificaItem(nomeItem, filePath) {
         return __awaiter(this, void 0, void 0, function* () {
             const inventario = yield (0, readCSV_1.readCSV)(filePath);

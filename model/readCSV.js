@@ -15,17 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.readCSV = void 0;
 const fs_1 = __importDefault(require("fs"));
 const readline_1 = __importDefault(require("readline"));
-/*
-export const readCSV = async (filePath: string): Promise<Data[]> => {
-    return new Promise((resolve, reject) => {
-        const results: Data[] = [];
-        fs.createReadStream(filePath)
-        .pipe(csv())
-        .on('data', (data: Data) => results.push(data))
-        .on('end', () => resolve(results))
-        .on('error', (error) => reject(error));
-    });
-};*/
 const readCSV = (filePath) => __awaiter(void 0, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
         const data = [];

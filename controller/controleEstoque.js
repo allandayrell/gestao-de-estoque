@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
 const readCSV_1 = require("../model/readCSV");
+const writeCSV_1 = require("../model/writeCSV");
 const serviceEstoque_1 = require("../service/serviceEstoque");
 const filePath = './model/estoque.csv';
 /*
@@ -67,6 +68,8 @@ function adicionarProduto(data) {
             if (itemEncontrado == false) {
                 yield service.criar(data);
             }
+            yield (0, writeCSV_1.writeCSV)(filePath, []);
+            yield (0, writeCSV_1.writeCSV)(filePath, inventarioAtual);
             console.log("Produto adicionado com sucesso.");
         }
         catch (error) {
@@ -75,45 +78,33 @@ function adicionarProduto(data) {
     });
 }
 exports.adicionarProduto = adicionarProduto;
-/*
-export async function removerProduto(nomeProduto: string){
-    try {
-        const service = new estoqueService();
-        await service.remover(nomeProduto);
-    } catch (error) {
-        console.error('Erro ao remover item:', error);
-    }
-}
-*/
-function removerProduto(nomeItem, filePath) {
+function removerProduto(nomeProduto, filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield (0, readCSV_1.readCSV)(filePath);
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].name === nomeItem) {
-                data[i].status = 0;
+        try {
+            const inventarioAtual = yield (0, readCSV_1.readCSV)(filePath);
+            const service = new serviceEstoque_1.estoqueService();
+            let itemEncontrado = false;
+            for (let i = 0; i < inventarioAtual.length; i++) {
+                const item = inventarioAtual[i];
+                if (item.name === nomeProduto && item.status === 1) {
+                    inventarioAtual[i].status = 0;
+                    itemEncontrado = true;
+                    yield (0, writeCSV_1.writeCSV)(filePath, []);
+                    yield (0, writeCSV_1.writeCSV)(filePath, inventarioAtual);
+                    break;
+                }
             }
+            if (itemEncontrado == false) {
+                console.log("Produto não encontrado!");
+            }
+            console.log("Produto removido com sucesso.");
+        }
+        catch (error) {
+            console.log("Erro ao remover produto. ", error);
         }
     });
 }
 exports.removerProduto = removerProduto;
-/*
-export async function removerProduto(nomeItem: string, filePath: string): Promise<void> {
-    const service = new estoqueService();
-    if (!await service.verificaItem(nomeItem, filePath)) {
-        throw new Error(`Item "${nomeItem}" não encontrado no inventário.`);
-    }
-
-    const inventario = await readCSV(filePath);
-
-    const novoInventario = [];
-
-    for (const item of inventario) {
-        if (item.name !== nomeItem) {
-        novoInventario.push(item);
-        }
-    }
-    await writeCSV(filePath, novoInventario);
-}*/
 function listarProdutos(filePath) {
     return __awaiter(this, void 0, void 0, function* () {
         const data = yield (0, readCSV_1.readCSV)(filePath);

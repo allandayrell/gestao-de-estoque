@@ -22,7 +22,7 @@ const writeCSV = (filePath, data) => __awaiter(void 0, void 0, void 0, function*
                 { id: 'amount', title: 'QUANTIDADE' },
                 { id: 'status', title: 'STATUS' },
             ],
-            append: true,
+            append: false,
         });
         yield csvWriter.writeRecords(data);
     }

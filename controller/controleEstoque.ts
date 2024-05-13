@@ -63,6 +63,9 @@ export async function adicionarProduto(data:Data){
         if(itemEncontrado == false){
             await service.criar(data);
         }
+
+        await writeCSV(filePath, []);
+        await writeCSV(filePath, inventarioAtual);
         console.log("Produto adicionado com sucesso.");
     
         
@@ -71,45 +74,35 @@ export async function adicionarProduto(data:Data){
     }
 }
 
-/*
-export async function removerProduto(nomeProduto: string){
-    try {
+
+export async function removerProduto(nomeProduto: string, filePath: string){
+    try{
+        const inventarioAtual: Data[] = await readCSV(filePath);
         const service = new estoqueService();
-        await service.remover(nomeProduto);
-    } catch (error) {
-        console.error('Erro ao remover item:', error);
+        let itemEncontrado = false;
+
+        for(let i = 0; i < inventarioAtual.length; i++){
+            const item = inventarioAtual[i];
+            if(item.name === nomeProduto && item.status === 1){
+                inventarioAtual[i].status = 0;
+                itemEncontrado = true;
+                await writeCSV(filePath, []);
+                await writeCSV(filePath, inventarioAtual);
+                break;
+            }
+        }
+
+        if(itemEncontrado == false){
+            console.log("Produto não encontrado!");
+        }
+        console.log("Produto removido com sucesso.");
+    
+        
+    }catch(error){
+        console.log("Erro ao remover produto. ", error);
     }
 }
-*/
 
-export async function removerProduto(nomeItem: string, filePath: string): Promise<void> {
-    const data = await readCSV(filePath);
-    for(let i = 0; i < data.length; i++){
-        if(data[i].name === nomeItem){
-            data[i].status = 0;
-        }
-    }
-}
-
-
-/*
-export async function removerProduto(nomeItem: string, filePath: string): Promise<void> {
-    const service = new estoqueService();
-    if (!await service.verificaItem(nomeItem, filePath)) {
-        throw new Error(`Item "${nomeItem}" não encontrado no inventário.`);
-    }
-
-    const inventario = await readCSV(filePath);
-
-    const novoInventario = [];
-
-    for (const item of inventario) {
-        if (item.name !== nomeItem) {
-        novoInventario.push(item);
-        }
-    }
-    await writeCSV(filePath, novoInventario);
-}*/
 
 export async function listarProdutos(filePath: string) {
     const data = await readCSV(filePath);
