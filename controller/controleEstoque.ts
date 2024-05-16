@@ -175,3 +175,29 @@ export async function mediaValores(filePath: string) {
         console.error("Erro ao calcular valor médio total:", error);
     }
 }
+
+export async function mediaPeso(filePath: string) {
+    try{
+        const data = await readCSV(filePath);
+        let media = 0;
+        let total = await pesoTotal(filePath);
+        let quantidade = 0;
+
+        if (total === undefined) {
+            throw new Error('Erro ao calcular peso total');
+        }
+
+        for(let i = 0; i < data.length; i++) {
+            quantidade += data[i].amount;
+        }
+
+        if (quantidade === 0) {
+            throw new Error('Não há itens no estoque para calcular a média');
+        }
+
+        media = total / quantidade;
+        return media;
+    }catch (error) {
+        console.error("Erro ao calcular peso médio total:", error);
+    }
+}

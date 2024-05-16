@@ -5,7 +5,7 @@ import { listarProdutos } from './controller/controleEstoque';
 import { valorTotal } from './controller/controleEstoque';
 import { pesoTotal } from './controller/controleEstoque';
 import { mediaValores } from './controller/controleEstoque';
-
+import { mediaPeso } from './controller/controleEstoque';
 
 const prompt = require('prompt-sync')({sigint: true});
 import * as readline from 'readline';
@@ -35,7 +35,9 @@ const main = async () => {
         console.log("Para saber o peso total do estoque, digite: 5;");
         console.log("Para saber o valor médio dos itens do estoque, digite: 6;");
         console.log("Para saber o peso médio dos itens do estoque, digite: 7;");
-        console.log("Para sair, digite: x.");
+        console.log("Para saber a quantidade de itens (total) do estoque, digite: 8;");
+        console.log("Para saber a quantidade de produtos (únicos) do estoque, digite: 9;");
+        console.log("Para sair, digite: 0.");
         console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--")
 
         let operacao: number = parseInt(await getInput("Digite uma opção: "));
@@ -90,6 +92,17 @@ const main = async () => {
                     let valorMedio;
                     valorMedio = await mediaValores(filePath).catch(error => console.error(error));
                     console.log("Valor total calculado:", valorMedio, "reais");
+                    break;
+                case 7:
+                    let pesoMedio;
+                    pesoMedio = await mediaPeso(filePath).catch(error => console.error(error));
+                    console.log("Peso total calculado:", pesoMedio, "kg");
+                    break;
+                case 8:
+
+                    break;
+                case9:
+                    
                     break;
                 default:
                     console.log("Operação Inválida!");

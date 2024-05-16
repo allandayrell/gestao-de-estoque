@@ -38,6 +38,7 @@ const controleEstoque_3 = require("./controller/controleEstoque");
 const controleEstoque_4 = require("./controller/controleEstoque");
 const controleEstoque_5 = require("./controller/controleEstoque");
 const controleEstoque_6 = require("./controller/controleEstoque");
+const controleEstoque_7 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -109,6 +110,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     let valorMedio;
                     valorMedio = yield (0, controleEstoque_6.mediaValores)(filePath).catch(error => console.error(error));
                     console.log("Valor total calculado:", valorMedio, "reais");
+                    break;
+                case 7:
+                    let pesoMedio;
+                    pesoMedio = yield (0, controleEstoque_7.mediaPeso)(filePath).catch(error => console.error(error));
+                    console.log("Peso total calculado:", pesoMedio, "kg");
                     break;
                 default:
                     console.log("Operação Inválida!");
