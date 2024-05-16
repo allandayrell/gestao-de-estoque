@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
+exports.pesoTotal = exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
 const readCSV_1 = require("../model/readCSV");
 const writeCSV_1 = require("../model/writeCSV");
 const serviceEstoque_1 = require("../service/serviceEstoque");
@@ -107,11 +107,16 @@ function removerProduto(nomeProduto, filePath) {
 exports.removerProduto = removerProduto;
 function listarProdutos(filePath) {
     return __awaiter(this, void 0, void 0, function* () {
-        const data = yield (0, readCSV_1.readCSV)(filePath);
-        for (let i = 0; i < data.length; i++) {
-            if (data[i].status !== 0) {
-                console.log("Nome:", data[i].name, ". Peso: ", data[i].weight, ". Valor: ", data[i].value, ". Quantidade: ", data[i].amount);
+        try {
+            const data = yield (0, readCSV_1.readCSV)(filePath);
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].status !== 0) {
+                    console.log("Nome:", data[i].name, ". Peso: ", data[i].weight, ". Valor: ", data[i].value, ". Quantidade: ", data[i].amount);
+                }
             }
+        }
+        catch (error) {
+            console.error("Erro ao listar produtos:", error);
         }
     });
 }
@@ -124,7 +129,7 @@ function valorTotal(filePath) {
             for (let i = 0; i < data.length; i++) {
                 total += data[i].value * data[i].amount;
             }
-            console.log("Valor total calculado:", total);
+            console.log("Valor total calculado:", total, "reais");
         }
         catch (error) {
             console.error("Erro ao calcular valor total:", error);
@@ -132,3 +137,20 @@ function valorTotal(filePath) {
     });
 }
 exports.valorTotal = valorTotal;
+function pesoTotal(filePath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, readCSV_1.readCSV)(filePath);
+            let total = 0;
+            for (let i = 0; i < data.length; i++) {
+                total += data[i].weight * data[i].amount;
+            }
+            total = total / 1000;
+            console.log("Valor total calculado:", total, "kg");
+        }
+        catch (error) {
+            console.error("Erro ao calcular peso total:", error);
+        }
+    });
+}
+exports.pesoTotal = pesoTotal;

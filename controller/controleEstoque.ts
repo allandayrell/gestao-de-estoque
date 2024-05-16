@@ -129,8 +129,23 @@ export async function valorTotal(filePath: string) {
         for(let i = 0; i < data.length; i++) {
             total += data[i].value * data[i].amount;
         }
-        console.log("Valor total calculado:", total);
+        console.log("Valor total calculado:", total, "reais");
     } catch (error) {
         console.error("Erro ao calcular valor total:", error);
+    }
+}
+
+export async function pesoTotal(filePath: string) {
+    try {
+        const data = await readCSV(filePath);
+        let total = 0;
+
+        for(let i = 0; i < data.length; i++) {
+            total += data[i].weight * data[i].amount;
+        }
+        total = total / 1000;
+        console.log("Valor total calculado:", total, "kg");
+    } catch (error) {
+        console.error("Erro ao calcular peso total:", error);
     }
 }

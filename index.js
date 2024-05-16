@@ -36,6 +36,7 @@ const controleEstoque_1 = require("./controller/controleEstoque");
 const controleEstoque_2 = require("./controller/controleEstoque");
 const controleEstoque_3 = require("./controller/controleEstoque");
 const controleEstoque_4 = require("./controller/controleEstoque");
+const controleEstoque_5 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -52,12 +53,13 @@ const getInput = (question) => {
 };
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("Para adicionar produto, digite: 1");
-        console.log("Para remover produto, digite: 2");
-        console.log("Para lisar os produtos em estoque, digite: 3");
-        console.log("Para saber o valor total do estoque, digite: 4");
-        console.log("Para sair, digite: x");
-        console.log("Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula.");
+        console.log("Para adicionar produto, digite: 1;");
+        console.log("Para remover produto, digite: 2;");
+        console.log("Para lisar os produtos em estoque, digite: 3;");
+        console.log("Para saber o valor total do estoque, digite: 4;");
+        console.log("Para saber o peso total do estoque, digite: 5;");
+        console.log("Para sair, digite: x.");
+        console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--");
         let operacao = parseInt(yield getInput("Digite uma opção: "));
         let primeiraOperacao = true;
         while (operacao !== 0) {
@@ -78,20 +80,23 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     novoItem.weight = parseFloat(yield getInput("Digite o peso do produto em gramas: "));
                     novoItem.value = parseFloat(yield getInput("Digite o valor do produto: "));
                     novoItem.amount = parseInt(yield getInput("Digite a quantidade do produto: "));
-                    yield (0, controleEstoque_1.adicionarProduto)(novoItem);
+                    yield (0, controleEstoque_1.adicionarProduto)(novoItem).catch(error => console.error('Erro ao adicionar produto:', error));
                     break;
                 case 2:
                     let item = yield getInput("Digite o nome do produto para ser removido: ");
                     let certeza = parseInt(yield getInput("Tem certeza que deseja remover o item? se sim digite 1: "));
                     if (certeza === 1) {
-                        yield (0, controleEstoque_2.removerProduto)(item, filePath);
+                        yield (0, controleEstoque_2.removerProduto)(item, filePath).catch(error => console.error('Erro ao remover item:', error));
                     }
                     break;
                 case 3:
-                    yield (0, controleEstoque_3.listarProdutos)(filePath);
+                    yield (0, controleEstoque_3.listarProdutos)(filePath).catch(error => console.error('Erro ao listar produtos:', error));
                     break;
                 case 4:
-                    yield (0, controleEstoque_4.valorTotal)(filePath).catch(error => console.error('Erro ao chamar valorTotal:', error));
+                    yield (0, controleEstoque_4.valorTotal)(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    break;
+                case 5:
+                    yield (0, controleEstoque_5.pesoTotal)(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
                     break;
                 default:
                     console.log("Operação Inválida!");

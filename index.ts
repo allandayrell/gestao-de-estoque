@@ -3,6 +3,9 @@ import { adicionarProduto } from './controller/controleEstoque';
 import { removerProduto } from './controller/controleEstoque';
 import { listarProdutos } from './controller/controleEstoque';
 import { valorTotal } from './controller/controleEstoque';
+import { pesoTotal } from './controller/controleEstoque';
+
+
 const prompt = require('prompt-sync')({sigint: true});
 import * as readline from 'readline';
 
@@ -24,11 +27,12 @@ const getInput = (question: string): Promise<string> => {
 const main = async () => {
     try {
 
-        console.log("Para adicionar produto, digite: 1");
-        console.log("Para remover produto, digite: 2");
-        console.log("Para lisar os produtos em estoque, digite: 3");
-        console.log("Para saber o valor total do estoque, digite: 4")
-        console.log("Para sair, digite: x");
+        console.log("Para adicionar produto, digite: 1;");
+        console.log("Para remover produto, digite: 2;");
+        console.log("Para lisar os produtos em estoque, digite: 3;");
+        console.log("Para saber o valor total do estoque, digite: 4;");
+        console.log("Para saber o peso total do estoque, digite: 5;");
+        console.log("Para sair, digite: x.");
         console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--")
 
         let operacao: number = parseInt(await getInput("Digite uma opção: "));
@@ -70,6 +74,9 @@ const main = async () => {
                     break;
                 case 4:
                     await valorTotal(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    break;
+                case 5:
+                    await pesoTotal(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
                     break;
                 default:
                     console.log("Operação Inválida!");
