@@ -6,6 +6,7 @@ import { valorTotal } from './controller/controleEstoque';
 import { pesoTotal } from './controller/controleEstoque';
 import { mediaValores } from './controller/controleEstoque';
 import { mediaPeso } from './controller/controleEstoque';
+import { totalItens } from './controller/controleEstoque';
 
 const prompt = require('prompt-sync')({sigint: true});
 import * as readline from 'readline';
@@ -99,9 +100,11 @@ const main = async () => {
                     console.log("Peso total calculado:", pesoMedio, "kg");
                     break;
                 case 8:
-
+                    let qtdItens;
+                    qtdItens = await totalItens(filePath).catch(error => console.error(error));
+                    console.log("Quantidade de itens no total:", qtdItens, );
                     break;
-                case9:
+                case 9:
                     
                     break;
                 default:

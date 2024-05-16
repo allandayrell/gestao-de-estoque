@@ -201,3 +201,22 @@ export async function mediaPeso(filePath: string) {
         console.error("Erro ao calcular peso médio total:", error);
     }
 }
+
+export async function totalItens(filePath: string){
+    try{
+        const data = await readCSV(filePath);
+        let total = 0;
+
+        for(let i = 0; i < data.length; i++){
+            total += data[i].amount;
+        }
+        
+        if (total === 0) {
+            throw new Error('Não há itens no estoque para calcular a média');
+        }
+
+        return total;
+    }catch (error) {
+        console.error("Erro ao calcular total de itens:", error);
+    }
+}

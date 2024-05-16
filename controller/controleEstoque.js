@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mediaPeso = exports.mediaValores = exports.pesoTotal = exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
+exports.totalItens = exports.mediaPeso = exports.mediaValores = exports.pesoTotal = exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
 const readCSV_1 = require("../model/readCSV");
 const writeCSV_1 = require("../model/writeCSV");
 const serviceEstoque_1 = require("../service/serviceEstoque");
@@ -204,3 +204,19 @@ function mediaPeso(filePath) {
     });
 }
 exports.mediaPeso = mediaPeso;
+function totalItens(filePath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, readCSV_1.readCSV)(filePath);
+            let total = 0;
+            for (let i = 0; i < data.length; i++) {
+                total += data[i].amount;
+            }
+            return total;
+        }
+        catch (error) {
+            console.error("Erro ao calcular total de itens:", error);
+        }
+    });
+}
+exports.totalItens = totalItens;

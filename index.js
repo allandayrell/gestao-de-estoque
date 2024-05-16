@@ -39,6 +39,7 @@ const controleEstoque_4 = require("./controller/controleEstoque");
 const controleEstoque_5 = require("./controller/controleEstoque");
 const controleEstoque_6 = require("./controller/controleEstoque");
 const controleEstoque_7 = require("./controller/controleEstoque");
+const controleEstoque_8 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -62,7 +63,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("Para saber o peso total do estoque, digite: 5;");
         console.log("Para saber o valor médio dos itens do estoque, digite: 6;");
         console.log("Para saber o peso médio dos itens do estoque, digite: 7;");
-        console.log("Para sair, digite: x.");
+        console.log("Para saber a quantidade de itens (total) do estoque, digite: 8;");
+        console.log("Para saber a quantidade de produtos (únicos) do estoque, digite: 9;");
+        console.log("Para sair, digite: 0.");
         console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--");
         let operacao = parseInt(yield getInput("Digite uma opção: "));
         let primeiraOperacao = true;
@@ -116,6 +119,12 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     pesoMedio = yield (0, controleEstoque_7.mediaPeso)(filePath).catch(error => console.error(error));
                     console.log("Peso total calculado:", pesoMedio, "kg");
                     break;
+                case 8:
+                    let qtdItens;
+                    qtdItens = yield (0, controleEstoque_8.totalItens)(filePath).catch(error => console.error(error));
+                    console.log("Quantidade de itens no total:", qtdItens);
+                    break;
+                    case9: break;
                 default:
                     console.log("Operação Inválida!");
                     break;
