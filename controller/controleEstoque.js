@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pesoTotal = exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
+exports.mediaValores = exports.pesoTotal = exports.valorTotal = exports.listarProdutos = exports.removerProduto = exports.adicionarProduto = void 0;
 const readCSV_1 = require("../model/readCSV");
 const writeCSV_1 = require("../model/writeCSV");
 const serviceEstoque_1 = require("../service/serviceEstoque");
@@ -129,7 +129,7 @@ function valorTotal(filePath) {
             for (let i = 0; i < data.length; i++) {
                 total += data[i].value * data[i].amount;
             }
-            console.log("Valor total calculado:", total, "reais");
+            return total;
         }
         catch (error) {
             console.error("Erro ao calcular valor total:", error);
@@ -146,7 +146,7 @@ function pesoTotal(filePath) {
                 total += data[i].weight * data[i].amount;
             }
             total = total / 1000;
-            console.log("Valor total calculado:", total, "kg");
+            return total;
         }
         catch (error) {
             console.error("Erro ao calcular peso total:", error);
@@ -154,3 +154,28 @@ function pesoTotal(filePath) {
     });
 }
 exports.pesoTotal = pesoTotal;
+function mediaValores(filePath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const data = yield (0, readCSV_1.readCSV)(filePath);
+            let media = 0;
+            let total = yield valorTotal(filePath);
+            let quantidade = 0;
+            if (total === undefined) {
+                throw new Error('Erro ao calcular valor total');
+            }
+            for (let i = 0; i < data.length; i++) {
+                quantidade += data[i].amount;
+            }
+            if (quantidade === 0) {
+                throw new Error('Não há itens no estoque para calcular a média');
+            }
+            media = total / quantidade;
+            return media;
+        }
+        catch (error) {
+            console.error("Erro ao calcular valor médio total:", error);
+        }
+    });
+}
+exports.mediaValores = mediaValores;

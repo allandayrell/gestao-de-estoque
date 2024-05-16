@@ -4,6 +4,7 @@ import { removerProduto } from './controller/controleEstoque';
 import { listarProdutos } from './controller/controleEstoque';
 import { valorTotal } from './controller/controleEstoque';
 import { pesoTotal } from './controller/controleEstoque';
+import { mediaValores } from './controller/controleEstoque';
 
 
 const prompt = require('prompt-sync')({sigint: true});
@@ -29,9 +30,11 @@ const main = async () => {
 
         console.log("Para adicionar produto, digite: 1;");
         console.log("Para remover produto, digite: 2;");
-        console.log("Para lisar os produtos em estoque, digite: 3;");
+        console.log("Para litsar os produtos em estoque, digite: 3;");
         console.log("Para saber o valor total do estoque, digite: 4;");
         console.log("Para saber o peso total do estoque, digite: 5;");
+        console.log("Para saber o valor médio dos itens do estoque, digite: 6;");
+        console.log("Para saber o peso médio dos itens do estoque, digite: 7;");
         console.log("Para sair, digite: x.");
         console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--")
 
@@ -73,10 +76,20 @@ const main = async () => {
                     await listarProdutos(filePath).catch(error => console.error('Erro ao listar produtos:', error));
                     break;
                 case 4:
-                    await valorTotal(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    let valorEstoque;
+                    valorEstoque = await valorTotal(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    console.log("Valor total calculado:", valorEstoque, "reais");
+
                     break;
                 case 5:
-                    await pesoTotal(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
+                    let pesoEstoque;
+                    pesoEstoque = await pesoTotal(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
+                    console.log("Valor total calculado:", pesoEstoque, "kg");
+                    break;
+                case 6:
+                    let valorMedio;
+                    valorMedio = await mediaValores(filePath).catch(error => console.error(error));
+                    console.log("Valor total calculado:", valorMedio, "reais");
                     break;
                 default:
                     console.log("Operação Inválida!");

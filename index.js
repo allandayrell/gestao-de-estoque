@@ -37,6 +37,7 @@ const controleEstoque_2 = require("./controller/controleEstoque");
 const controleEstoque_3 = require("./controller/controleEstoque");
 const controleEstoque_4 = require("./controller/controleEstoque");
 const controleEstoque_5 = require("./controller/controleEstoque");
+const controleEstoque_6 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -55,9 +56,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("Para adicionar produto, digite: 1;");
         console.log("Para remover produto, digite: 2;");
-        console.log("Para lisar os produtos em estoque, digite: 3;");
+        console.log("Para litsar os produtos em estoque, digite: 3;");
         console.log("Para saber o valor total do estoque, digite: 4;");
         console.log("Para saber o peso total do estoque, digite: 5;");
+        console.log("Para saber o valor médio dos itens do estoque, digite: 6;");
+        console.log("Para saber o peso médio dos itens do estoque, digite: 7;");
         console.log("Para sair, digite: x.");
         console.log("--Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula para valores.--");
         let operacao = parseInt(yield getInput("Digite uma opção: "));
@@ -93,10 +96,19 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     yield (0, controleEstoque_3.listarProdutos)(filePath).catch(error => console.error('Erro ao listar produtos:', error));
                     break;
                 case 4:
-                    yield (0, controleEstoque_4.valorTotal)(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    let valorEstoque;
+                    valorEstoque = yield (0, controleEstoque_4.valorTotal)(filePath).catch(error => console.error('Erro ao calcular valor total:', error));
+                    console.log("Valor total calculado:", valorEstoque, "reais");
                     break;
                 case 5:
-                    yield (0, controleEstoque_5.pesoTotal)(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
+                    let pesoEstoque;
+                    pesoEstoque = yield (0, controleEstoque_5.pesoTotal)(filePath).catch(error => console.error('Erro ao calcular peso total:', error));
+                    console.log("Valor total calculado:", pesoEstoque, "kg");
+                    break;
+                case 6:
+                    let valorMedio;
+                    valorMedio = yield (0, controleEstoque_6.mediaValores)(filePath).catch(error => console.error(error));
+                    console.log("Valor total calculado:", valorMedio, "reais");
                     break;
                 default:
                     console.log("Operação Inválida!");
