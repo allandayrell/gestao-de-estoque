@@ -210,7 +210,7 @@ export async function totalItens(filePath: string){
         for(let i = 0; i < data.length; i++){
             total += data[i].amount;
         }
-        
+
         if (total === 0) {
             throw new Error('Não há itens no estoque para calcular a média');
         }
@@ -218,5 +218,24 @@ export async function totalItens(filePath: string){
         return total;
     }catch (error) {
         console.error("Erro ao calcular total de itens:", error);
+    }
+}
+
+export async function totalProdutos(filePath: string){
+    try{
+        const data = await readCSV(filePath);
+        let total = 0;
+
+        for(let i = 0; i < data.length; i++){
+            total += 1;
+        }
+
+        if (total === 0) {
+            throw new Error('Não há itens no estoque para calcular a média');
+        }
+
+        return total;
+    }catch (error) {
+        console.error("Erro ao calcular total de produtos:", error);
     }
 }

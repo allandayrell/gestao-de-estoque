@@ -40,6 +40,7 @@ const controleEstoque_5 = require("./controller/controleEstoque");
 const controleEstoque_6 = require("./controller/controleEstoque");
 const controleEstoque_7 = require("./controller/controleEstoque");
 const controleEstoque_8 = require("./controller/controleEstoque");
+const controleEstoque_9 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -124,7 +125,11 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     qtdItens = yield (0, controleEstoque_8.totalItens)(filePath).catch(error => console.error(error));
                     console.log("Quantidade de itens no total:", qtdItens);
                     break;
-                    case9: break;
+                case 9:
+                    let qtdProdutos;
+                    qtdProdutos = yield (0, controleEstoque_9.totalProdutos)(filePath).catch(error => console.error(error));
+                    console.log("Quantidade de itens no total:", qtdProdutos);
+                    break;
                 default:
                     console.log("Operação Inválida!");
                     break;

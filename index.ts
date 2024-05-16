@@ -7,6 +7,7 @@ import { pesoTotal } from './controller/controleEstoque';
 import { mediaValores } from './controller/controleEstoque';
 import { mediaPeso } from './controller/controleEstoque';
 import { totalItens } from './controller/controleEstoque';
+import { totalProdutos } from './controller/controleEstoque';
 
 const prompt = require('prompt-sync')({sigint: true});
 import * as readline from 'readline';
@@ -105,7 +106,9 @@ const main = async () => {
                     console.log("Quantidade de itens no total:", qtdItens, );
                     break;
                 case 9:
-                    
+                    let qtdProdutos;
+                    qtdProdutos = await totalProdutos(filePath).catch(error => console.error(error));
+                    console.log("Quantidade de itens no total:", qtdProdutos, );
                     break;
                 default:
                     console.log("Operação Inválida!");
