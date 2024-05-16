@@ -1,7 +1,7 @@
 NOME,PESO,VALOR,QUANTIDADE,STATUS
-Maçã,200,2.5,50,1
-Banana,150,1.8,40,1
+Maçã,200,2,50,1
+Banana,150,1,40,1
 Laranja,230,12,2,1
-Uva,0.35,3.5,35,1
+Uva,0.35,3,35,1
 Melao,230,23,25,0
 Abacate,12,12,12,1

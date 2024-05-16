@@ -35,6 +35,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const controleEstoque_1 = require("./controller/controleEstoque");
 const controleEstoque_2 = require("./controller/controleEstoque");
 const controleEstoque_3 = require("./controller/controleEstoque");
+const controleEstoque_4 = require("./controller/controleEstoque");
 const prompt = require('prompt-sync')({ sigint: true });
 const readline = __importStar(require("readline"));
 const filePath = './model/estoque.csv';
@@ -51,29 +52,15 @@ const getInput = (question) => {
 };
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        /*
-        const novoItem: Data = {
-            name: 'Uva',
-            weight: 0.350,
-            value: 3.5,
-            amount: 35,
-            status: 1
-        };
-        */
-        //
-        //let item = 'Laranja';
-        //await removerProduto(item, filePath); 
-        //const data = await readCSV(filePath);
-        //console.log('Dados lidos:', data);
-        //await listarProdutos(filePath);
         console.log("Para adicionar produto, digite: 1");
         console.log("Para remover produto, digite: 2");
         console.log("Para lisar os produtos em estoque, digite: 3");
-        console.log("Para sair, digite: 4");
+        console.log("Para saber o valor total do estoque, digite: 4");
+        console.log("Para sair, digite: x");
         console.log("Digite sempre o nome com a primeira letra maiúscula e use ponto ao invés de virgula.");
         let operacao = parseInt(yield getInput("Digite uma opção: "));
         let primeiraOperacao = true;
-        while (operacao !== 4) {
+        while (operacao !== 0) {
             if (!primeiraOperacao) {
                 operacao = parseInt(yield getInput("Digite uma opção: "));
             }
@@ -104,7 +91,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                     yield (0, controleEstoque_3.listarProdutos)(filePath);
                     break;
                 case 4:
-                    operacao = 0;
+                    yield (0, controleEstoque_4.valorTotal)(filePath).catch(error => console.error('Erro ao chamar valorTotal:', error));
                     break;
                 default:
                     console.log("Operação Inválida!");

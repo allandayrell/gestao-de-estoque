@@ -105,13 +105,32 @@ export async function removerProduto(nomeProduto: string, filePath: string){
 
 
 export async function listarProdutos(filePath: string) {
-    const data = await readCSV(filePath);
-    for(let i = 0; i < data.length; i++) {
-        if(data[i].status !== 0){
-            console.log("Nome:",data[i].name,
-                    ". Peso: ", data[i].weight,
-                    ". Valor: ", data[i].value, 
-                    ". Quantidade: ", data[i].amount);
+    try{
+        const data = await readCSV(filePath);
+        for(let i = 0; i < data.length; i++) {
+            if(data[i].status !== 0){
+                console.log("Nome:",data[i].name,
+                        ". Peso: ", data[i].weight,
+                        ". Valor: ", data[i].value, 
+                        ". Quantidade: ", data[i].amount);
+            }
         }
+    }catch (error) {
+        console.error("Erro ao listar produtos:", error);
+    }
+    
+}
+
+export async function valorTotal(filePath: string) {
+    try {
+        const data = await readCSV(filePath);
+        let total = 0;
+
+        for(let i = 0; i < data.length; i++) {
+            total += data[i].value * data[i].amount;
+        }
+        console.log("Valor total calculado:", total);
+    } catch (error) {
+        console.error("Erro ao calcular valor total:", error);
     }
 }
